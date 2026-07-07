@@ -54,6 +54,8 @@ function renderProductos(lista) {
 }
 
 async function cargarProductos() {
+    if (!contenedorProductos) return;
+
     try {
         const response = await fetch(API_URL);
         if (!response.ok) throw new Error('No se pudo cargar el catálogo');
@@ -187,4 +189,9 @@ window.agregarAlCarrito = agregarAlCarrito;
 window.quitarDelCarrito = quitarDelCarrito;
 window.cambiarCantidad = cambiarCantidad;
 window.cambiarCantidadDirecta = cambiarCantidadDirecta;
-window.addEventListener('DOMContentLoaded', init);
+
+if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}
