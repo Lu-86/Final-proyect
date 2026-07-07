@@ -7,6 +7,41 @@ body {
     color: #1f2937;
 }
 
+.salto-contenido {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    z-index: 1000;
+    background: #111827;
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+}
+
+.salto-contenido:focus {
+    left: 1rem;
+    top: 1rem;
+}
+
+ a,
+button,
+input,
+textarea,
+select,
+[tabindex]:not([tabindex="-1"]) {
+    outline: none;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:not([tabindex="-1"]):focus-visible {
+    outline: 3px solid #dc2626;
+    outline-offset: 3px;
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;
     font-weight: 700;
