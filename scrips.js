@@ -93,17 +93,58 @@ function renderCarrito() {
     }
 
     listaCarrito.innerHTML = carrito.map(item => `
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <div>
+        <div class="item-carrito mb-4">
+            <div class="info-producto">
                 <strong>${item.title}</strong><br>
-                <small>${item.cantidad} x $${item.price}</small>
+                <small class="precio-unitario">$${item.price}</small>
             </div>
-            <button class="btn btn-sm btn-danger" onclick="quitarDelCarrito(${item.id})">X</button>
+            <div class="controles-cantidad">
+                <button class="btn-cantidad" onclick="cambiarCantidad(${item.id}, -1)">−</button>
+                <input type="number" class="input-cantidad" value="${item.cantidad}" 
+                       onchange="cambiarCantidadDirecta(${item.id}, this.value)" min="1">
+                <button class="btn-cantidad" onclick="cambiarCantidad(${item.id}, 1)">+</button>
+            </div>
+            <div class="subtotal-item">
+                <span class="subtotal-valor">$${(item.price * item.cantidad).toFixed(2)}</span>
+                <button class="btn btn-sm btn-danger" onclick="quitarDelCarrito(${item.id})">✕</button>
+            </div>
         </div>
     `).join('');
 
     const total = carrito.reduce((sum, item) => sum + item.price * item.cantidad, 0);
     totalCarrito.textContent = `$${total.toFixed(2)}`;
+}
+
+function cambiarCantidad(id, cambio) {
+    const item = carrito.find(p => p.id === id);
+    if (!item) return;
+
+    const nuevaCantidad = item.cantidad + cambio;
+    
+    if (nuevaCantidad < 1) {
+        quitarDelCarrito(id);
+        return;
+    }
+
+    item.cantidad = nuevaCantidad;
+    guardarCarritoEnStorage();
+    renderCarrito();
+}
+
+function cambiarCantidadDirecta(id, valor) {
+    const item = carrito.find(p => p.id === id);
+    if (!item) return;
+
+    const nuevaCantidad = parseInt(valor) || 1;
+    
+    if (nuevaCantidad < 1) {
+        quitarDelCarrito(id);
+        return;
+    }
+
+    item.cantidad = nuevaCantidad;
+    guardarCarritoEnStorage();
+    renderCarrito();
 }
 
 function quitarDelCarrito(id) {
@@ -112,11 +153,38 @@ function quitarDelCarrito(id) {
     renderCarrito();
 }
 
+function inicializarFormularioContacto() {
+    const formulario = document.getElementById('formulario-contacto');
+    const mensajeExito = document.querySelector('[data-fs-success]');
+    
+    if (!formulario) return;
+
+    const observer = new MutationObserver(() => {
+        if (mensajeExito && mensajeExito.style.display !== 'none') {
+            mensajeExito.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            setTimeout(() => {
+                mensajeExito.style.display = 'none';
+            }, 6000);
+        }
+    });
+
+    if (mensajeExito) {
+        observer.observe(mensajeExito, {
+            attributes: true,
+            attributeFilter: ['style']
+        });
+    }
+}
+
 async function init() {
     await cargarProductos();
     renderCarrito();
+    inicializarFormularioContacto();
 }
 
 window.agregarAlCarrito = agregarAlCarrito;
 window.quitarDelCarrito = quitarDelCarrito;
+window.cambiarCantidad = cambiarCantidad;
+window.cambiarCantidadDirecta = cambiarCantidadDirecta;
 window.addEventListener('DOMContentLoaded', init);
