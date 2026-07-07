@@ -71,6 +71,11 @@ h1, h2, h3, h4, h5, h6 {
     background: rgb(230, 111, 111);
 }
 
+#titulo-servicios {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
 .nav-principal {
     background-color: #111827;
     padding: 1rem 0;
@@ -465,6 +470,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .input-cantidad[type=number] {
+    appearance: none;
     -moz-appearance: textfield;
 }
 
