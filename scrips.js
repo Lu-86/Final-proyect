@@ -1,9 +1,9 @@
 const API_URL = 'https://fakestoreapi.com/products?limit=6';
 const STORAGE_KEY = 'carrito';
-const productosContainer = document.getElementById('productosContainer');
-const carritoItems = document.getElementById('carritoItems');
-const carritoTotal = document.getElementById('carritoTotal');
-const cartCount = document.getElementById('cartCount');
+const contenedorProductos = document.getElementById('contenedor-productos');
+const listaCarrito = document.getElementById('lista-carrito');
+const totalCarrito = document.getElementById('total-carrito');
+const contadorCompra = document.getElementById('contador-compra');
 
 function leerCarritoDesdeStorage() {
     try {
@@ -38,16 +38,16 @@ let productos = [];
 
 function renderProductos(lista) {
     productos = Array.isArray(lista) ? lista : [];
-    if (!productosContainer) return;
+    if (!contenedorProductos) return;
 
-    productosContainer.innerHTML = productos.map(producto => `
-        <div class="producto-card">
-            <img src="${producto.image}" class="producto-imagen" alt="${producto.title}">
-            <div class="producto-cuerpo">
-                <h5 class="producto-titulo">${producto.title}</h5>
-                <p class="producto-categoria">${producto.category}</p>
-                <p class="producto-precio">$${producto.price}</p>
-                <button class="boton-agregar" onclick="agregarAlCarrito(${producto.id})">Agregar al carrito</button>
+    contenedorProductos.innerHTML = productos.map(producto => `
+        <div class="tarjeta-producto">
+            <img src="${producto.image}" class="imagen-producto" alt="${producto.title}">
+            <div class="cuerpo-producto">
+                <h5 class="titulo-producto">${producto.title}</h5>
+                <p class="categoria-producto">${producto.category}</p>
+                <p class="precio-producto">$${producto.price}</p>
+                <button class="boton-carrito-agregar" onclick="agregarAlCarrito(${producto.id})">Agregar al carrito</button>
             </div>
         </div>
     `).join('');
@@ -62,7 +62,7 @@ async function cargarProductos() {
         renderProductos(lista);
     } catch (error) {
         console.error('Error al cargar productos:', error);
-        productosContainer.innerHTML = '<p class="text-danger">No se pudieron cargar los productos. Verifica tu conexión.</p>';
+        contenedorProductos.innerHTML = '<p class="text-danger">No se pudieron cargar los productos. Verifica tu conexión.</p>';
     }
 }
 
@@ -82,17 +82,17 @@ function agregarAlCarrito(id) {
 }
 
 function renderCarrito() {
-    if (!carritoItems || !carritoTotal || !cartCount) return;
+    if (!listaCarrito || !totalCarrito || !contadorCompra) return;
 
-    cartCount.textContent = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+    contadorCompra.textContent = carrito.reduce((sum, item) => sum + item.cantidad, 0);
 
     if (carrito.length === 0) {
-        carritoItems.innerHTML = '<p class="text-muted">Tu carrito está vacío.</p>';
-        carritoTotal.textContent = '$0';
+        listaCarrito.innerHTML = '<p class="text-muted">Tu carrito está vacío.</p>';
+        totalCarrito.textContent = '$0';
         return;
     }
 
-    carritoItems.innerHTML = carrito.map(item => `
+    listaCarrito.innerHTML = carrito.map(item => `
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
                 <strong>${item.title}</strong><br>
@@ -103,7 +103,7 @@ function renderCarrito() {
     `).join('');
 
     const total = carrito.reduce((sum, item) => sum + item.price * item.cantidad, 0);
-    carritoTotal.textContent = `$${total.toFixed(2)}`;
+    totalCarrito.textContent = `$${total.toFixed(2)}`;
 }
 
 function quitarDelCarrito(id) {

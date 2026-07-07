@@ -5,7 +5,7 @@ body {
     color: #1f2937;
 }
 
-.encabezado {
+.header-principal {
     background: linear-gradient(135deg, #7c2d12, #dc2626);
     color: white;
     padding: 4.5rem 0;
@@ -16,30 +16,30 @@ body {
     margin: 0 auto;
 }
 
-.fila-principal {
+.fila-hero {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 2rem;
 }
 
-.texto-principal,
-.contenido-promocional {
+.texto-hero,
+.seccion-promocion {
     flex: 1;
 }
 
-.titulo-principal {
+.titulo-hero {
     font-size: 2.8rem;
     font-weight: bold;
 }
 
-.texto-destacado {
+.subtitulo-hero {
     font-size: 1.1rem;
     margin-top: 0.8rem;
 }
 
-.boton-principal,
-.boton-carrito {
+.boton-coleccion,
+.boton-compra {
     display: inline-block;
     background: white;
     color: #b91c1c;
@@ -51,36 +51,36 @@ body {
     font-weight: bold;
 }
 
-.tarjeta-promocion,
+.tarjeta-envios,
 .card {
     background: white;
     border-radius: 1rem;
     box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
 }
 
-.tarjeta-promocion {
+.tarjeta-envios {
     padding: 1.5rem;
     background: rgb(230, 111, 111);
 }
 
-.menu-principal {
+.nav-principal {
     background-color: #111827;
     padding: 1rem 0;
 }
 
-.barra-navegacion {
+.barra-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .logo,
-.lista-menu a {
+.lista-nav a {
     color: white;
     text-decoration: none;
 }
 
-.lista-menu {
+.lista-nav {
     display: flex;
     gap: 1rem;
     list-style: none;
@@ -88,52 +88,52 @@ body {
     padding: 0;
 }
 
-.contenido-principal {
+.main-contenedor {
     padding: 3rem 0;
 }
 
-.seccion-introduccion,
-.grilla-servicios,
-.grilla-productos {
+.seccion-bienvenida,
+.grid-servicios,
+.grid-productos {
     display: grid;
     gap: 1.2rem;
 }
 
-.seccion-introduccion {
+.seccion-bienvenida {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     margin-bottom: 2rem;
 }
 
-.grilla-servicios {
+.grid-servicios {
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.grilla-productos {
+.grid-productos {
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.caja-contenido,
-.servicio-card {
+.contenedor-card,
+.tarjeta-servicio {
     padding: 1.2rem;
 }
 
-.servicio-card {
+.tarjeta-servicio {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.servicio-card:hover {
+.tarjeta-servicio:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 30px rgba(185, 28, 28, 0.15);
 }
 
-.encabezado-seccion {
+.encabezado-productos {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
 }
 
-.contador-carrito {
+.contador-compra {
     background: #111827;
     color: white;
     border-radius: 999px;
@@ -141,26 +141,26 @@ body {
     margin-left: 0.4rem;
 }
 
-.pie-pagina {
+.footer-principal {
     background-color: #111827;
     color: white;
     padding: 1.5rem 0;
 }
 
-.pie-contenido,
-.redes-sociales {
+.contenido-footer,
+.enlaces-redes {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
 }
 
-.redes-sociales a {
+.enlaces-redes a {
     color: #fecaca;
     text-decoration: none;
 }
 
-.producto-card {
+.tarjeta-producto {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -168,7 +168,7 @@ body {
     border: 1px solid #eee;
 }
 
-.producto-imagen {
+.imagen-producto {
     width: 100%;
     height: 220px;
     object-fit: contain;
@@ -176,7 +176,7 @@ body {
     background: #fff;
 }
 
-.producto-cuerpo {
+.cuerpo-producto {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -184,25 +184,25 @@ body {
     flex: 1;
 }
 
-.producto-titulo {
+.titulo-producto {
     font-size: 1rem;
     font-weight: bold;
     min-height: 2.8em;
 }
 
-.producto-categoria {
+.categoria-producto {
     color: #6b7280;
     text-transform: capitalize;
     font-size: 0.9rem;
 }
 
-.producto-precio {
+.precio-producto {
     font-size: 1.1rem;
     font-weight: bold;
     color: #b91c1c;
 }
 
-.boton-agregar {
+.boton-carrito-agregar {
     margin-top: auto;
     background: #111827;
     color: white;
@@ -212,27 +212,27 @@ body {
     cursor: pointer;
 }
 
-.boton-agregar:hover {
+.boton-carrito-agregar:hover {
     background: #1f2937;
 }
 
 @media (max-width: 768px) {
-    .fila-principal,
-    .seccion-introduccion,
-    .grilla-servicios,
-    .grilla-productos,
-    .pie-contenido {
+    .fila-hero,
+    .seccion-bienvenida,
+    .grid-servicios,
+    .grid-productos,
+    .contenido-footer {
         flex-direction: column;
         align-items: flex-start;
     }
 
-    .grilla-servicios,
-    .grilla-productos,
-    .seccion-introduccion {
+    .grid-servicios,
+    .grid-productos,
+    .seccion-bienvenida {
         grid-template-columns: 1fr;
     }
 
-    .encabezado-seccion {
+    .encabezado-productos {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.5rem;

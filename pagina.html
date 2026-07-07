@@ -8,16 +8,16 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="encabezado">
+    <header class="header-principal">
         <div class="contenedor">
-            <div class="fila fila-principal">
-                <div class="columna texto-principal">
-                    <h1 class="titulo-principal">Hardtaken</h1>
-                    <p class="texto-destacado">Ropa moderna, cómoda y con estilo para cada ocasión.</p>
-                    <a href="#productos" class="boton-principal">Ver colección</a>
+            <div class="fila fila-hero">
+                <div class="columna texto-hero">
+                    <h1 class="titulo-hero">Hardtaken</h1>
+                    <p class="subtitulo-hero">Ropa moderna, cómoda y con estilo para cada ocasión.</p>
+                    <a href="#productos" class="boton-coleccion">Ver colección</a>
                 </div>
-                <div class="columna contenido-promocional">
-                    <div class="tarjeta-promocion">
+                <div class="columna seccion-promocion">
+                    <div class="tarjeta-envios">
                         <h3>Envíos rápidos</h3>
                         <p>Calidad, comodidad y asesoría para tus compras.</p>
                     </div>
@@ -26,14 +26,14 @@
         </div>
     </header>
 
-    <nav class="menu-principal">
-        <div class="contenedor barra-navegacion">
+    <nav class="nav-principal">
+        <div class="contenedor barra-nav">
             <a class="logo" href="#">Hardtaken</a>
-            <button class="boton-menu" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacion">
-                <span class="icono-menu"></span>
+            <button class="boton-hamburguesa" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacion">
+                <span class="icono-hamburguesa"></span>
             </button>
-            <div class="collapse menu-desplegable" id="menuNavegacion">
-                <ul class="lista-menu">
+            <div class="collapse menu-mobile" id="menuNavegacion">
+                <ul class="lista-nav">
                     <li><a href="#inicio">Inicio</a></li>
                     <li><a href="#productos">Productos</a></li>
                     <li><a href="#contacto">Contacto</a></li>
@@ -42,19 +42,19 @@
         </div>
     </nav>
 
-    <main class="contenedor contenido-principal">
-        <section id="inicio" class="seccion-introduccion">
-            <div class="bloque-informativo">
-                <div class="card caja-contenido">
-                    <div class="cuerpo-card">
+    <main class="contenedor main-contenedor">
+        <section id="inicio" class="seccion-bienvenida">
+            <div class="tarjeta-info">
+                <div class="card contenedor-card">
+                    <div class="cuerpo-tarjeta">
                         <h2>Bienvenidos</h2>
                         <p>Descubre prendas seleccionadas para el día a día, eventos y estilo casual.</p>
                     </div>
                 </div>
             </div>
-            <div class="bloque-informativo">
-                <div class="card caja-contenido">
-                    <div class="cuerpo-card">
+            <div class="tarjeta-info">
+                <div class="card contenedor-card">
+                    <div class="cuerpo-tarjeta">
                         <h2>¿Por qué elegirnos?</h2>
                         <ul>
                             <li>Asesoría personalizada para tu estilo</li>
@@ -67,32 +67,32 @@
         </section>
 
         <section id="productos" class="seccion-productos">
-            <div class="encabezado-seccion">
+            <div class="encabezado-productos">
                 <h2>Productos</h2>
-                <button class="boton-carrito" type="button" data-bs-toggle="offcanvas" data-bs-target="#carritoOffcanvas">
-                    Carrito <span id="cartCount" class="contador-carrito">0</span>
+                <button class="boton-compra" type="button" data-bs-toggle="offcanvas" data-bs-target="#carritoOffcanvas">
+                    Carrito <span id="contador-compra" class="contador-compra">0</span>
                 </button>
             </div>
-            <div id="productosContainer" class="grilla-productos"></div>
+            <div id="contenedor-productos" class="grid-productos"></div>
         </section>
 
         <section class="seccion-servicios">
             <h2>Servicios</h2>
-            <div class="grilla-servicios">
-                <div class="card servicio-card">
-                    <div class="cuerpo-card">
+            <div class="grid-servicios">
+                <div class="card tarjeta-servicio">
+                    <div class="cuerpo-tarjeta">
                         <h3>Diseño personal</h3>
                         <p>Te ayudamos a encontrar outfits que se adapten a tu personalidad y ocasión.</p>
                     </div>
                 </div>
-                <div class="card servicio-card">
-                    <div class="cuerpo-card">
+                <div class="card tarjeta-servicio">
+                    <div class="cuerpo-tarjeta">
                         <h3>Actualizaciones</h3>
                         <p>Agregamos nuevas colecciones con tendencias modernas cada semana.</p>
                     </div>
                 </div>
-                <div class="card servicio-card">
-                    <div class="cuerpo-card">
+                <div class="card tarjeta-servicio">
+                    <div class="cuerpo-tarjeta">
                         <h3>Accesorios</h3>
                         <p>Complementa tu look con bolsos, joyas y detalles que destacan tu estilo.</p>
                     </div>
@@ -107,19 +107,19 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
-            <div id="carritoItems"></div>
+            <div id="lista-carrito"></div>
             <hr>
             <div class="resumen-carrito">
                 <span>Total:</span>
-                <span id="carritoTotal">$0</span>
+                <span id="total-carrito">$0</span>
             </div>
         </div>
     </div>
 
-    <footer id="contacto" class="pie-pagina">
-        <div class="contenedor pie-contenido">
+    <footer id="contacto" class="footer-principal">
+        <div class="contenedor contenido-footer">
             <p>© 2026 Hardtaken. Todos los derechos reservados.</p>
-            <div class="redes-sociales">
+            <div class="enlaces-redes">
                 <a href="#">Instagram</a>
                 <a href="#">Facebook</a>
                 <a href="#">WhatsApp</a>
