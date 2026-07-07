@@ -1,15 +1,46 @@
 const API_URL = 'https://fakestoreapi.com/products?limit=6';
+const STORAGE_KEY = 'carrito';
 const productosContainer = document.getElementById('productosContainer');
 const carritoItems = document.getElementById('carritoItems');
 const carritoTotal = document.getElementById('carritoTotal');
 const cartCount = document.getElementById('cartCount');
 
-let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+function leerCarritoDesdeStorage() {
+    try {
+        const datos = localStorage.getItem(STORAGE_KEY);
+        if (!datos) return [];
+
+        const carritoGuardado = JSON.parse(datos);
+        if (!Array.isArray(carritoGuardado)) return [];
+
+        return carritoGuardado
+            .filter(item => item && typeof item === 'object')
+            .map(item => ({
+                ...item,
+                cantidad: Number.isFinite(Number(item.cantidad)) && Number(item.cantidad) > 0 ? Number(item.cantidad) : 1
+            }));
+    } catch (error) {
+        console.warn('No se pudo leer el carrito:', error);
+        return [];
+    }
+}
+
+function guardarCarritoEnStorage() {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(carrito));
+    } catch (error) {
+        console.warn('No se pudo guardar el carrito:', error);
+    }
+}
+
+let carrito = leerCarritoDesdeStorage();
 let productos = [];
 
 function renderProductos(lista) {
-    productos = lista;
-    productosContainer.innerHTML = lista.map(producto => `
+    productos = Array.isArray(lista) ? lista : [];
+    if (!productosContainer) return;
+
+    productosContainer.innerHTML = productos.map(producto => `
         <div class="producto-card">
             <img src="${producto.image}" class="producto-imagen" alt="${producto.title}">
             <div class="producto-cuerpo">
@@ -46,7 +77,7 @@ function agregarAlCarrito(id) {
         carrito.push({ ...producto, cantidad: 1 });
     }
 
-    localStorage.setItem('carrito', JSON.stringify(carrito));
+    guardarCarritoEnStorage();
     renderCarrito();
 }
 
@@ -77,7 +108,7 @@ function renderCarrito() {
 
 function quitarDelCarrito(id) {
     carrito = carrito.filter(item => item.id !== id);
-    localStorage.setItem('carrito', JSON.stringify(carrito));
+    guardarCarritoEnStorage();
     renderCarrito();
 }
 
@@ -89,5 +120,3 @@ async function init() {
 window.agregarAlCarrito = agregarAlCarrito;
 window.quitarDelCarrito = quitarDelCarrito;
 window.addEventListener('DOMContentLoaded', init);
-
-
