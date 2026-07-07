@@ -1,4 +1,4 @@
-Mi proyecto web es una plataforma moderna y accesible diseñada para ofrecer una experiencia intuitiva y atractiva. Incluye:
+Mi proyecto web es una plataforma ficticia moderna y accesible diseñada para ofrecer una experiencia intuitiva y atractiva. Incluye:
 
 - Navegación clara y responsiva.
 - Contenido organizado para facilitar la interacción.
