@@ -13,9 +13,23 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .header-principal {
-    background: linear-gradient(135deg, #7c2d12, #dc2626);
+    position: relative;
+    background:
+        linear-gradient(120deg, rgba(17, 24, 39, 0.82) 0%, rgba(185, 28, 28, 0.7) 50%, rgba(17, 24, 39, 0.6) 100%),
+        url('https://images.unsplash.com/photo-1665040945095-a8f4a335b969?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;
     color: white;
-    padding: 4.5rem 0;
+    padding: clamp(3rem, 6vw, 5rem) 0;
+    min-height: clamp(420px, 60vh, 620px);
+    display: flex;
+    align-items: center;
+}
+
+.header-principal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.22));
+    pointer-events: none;
 }
 
 .contenedor {
@@ -28,6 +42,8 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
     justify-content: space-between;
     gap: 2rem;
+    position: relative;
+    z-index: 1;
 }
 
 .texto-hero,
@@ -68,7 +84,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .tarjeta-envios {
     padding: 1.5rem;
-    background: rgb(230, 111, 111);
+    background: rgba(255, 255, 255, 0.22);
+    color: white;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 #titulo-servicios {
@@ -326,6 +346,42 @@ h1, h2, h3, h4, h5, h6 {
 
 .boton-enviar:active {
     transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .fila-hero {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .texto-hero,
+    .seccion-promocion {
+        width: 100%;
+    }
+
+    .titulo-hero {
+        font-size: 2.2rem;
+    }
+
+    .subtitulo-hero {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-principal {
+        min-height: auto;
+        padding: 2.5rem 0;
+    }
+
+    .titulo-hero {
+        font-size: 1.8rem;
+    }
+
+    .boton-coleccion {
+        width: 100%;
+        text-align: center;
+    }
 }
 
 @keyframes slideIn {
