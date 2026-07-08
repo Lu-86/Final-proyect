@@ -5,6 +5,12 @@ const listaCarrito = document.getElementById('lista-carrito');
 const totalCarrito = document.getElementById('total-carrito');
 const contadorCompra = document.getElementById('contador-compra');
 
+function escaparHTML(texto) {
+    const div = document.createElement('div');
+    div.textContent = texto;
+    return div.innerHTML;
+}
+
 function leerCarritoDesdeStorage() {
     try {
         const datos = localStorage.getItem(STORAGE_KEY);
@@ -42,10 +48,10 @@ function renderProductos(lista) {
 
     contenedorProductos.innerHTML = productos.map(producto => `
         <div class="tarjeta-producto">
-            <img src="${producto.image}" class="imagen-producto" alt="${producto.title}">
+            <img src="${escaparHTML(producto.image)}" class="imagen-producto" alt="${escaparHTML(producto.title)}">
             <div class="cuerpo-producto">
-                <h5 class="titulo-producto">${producto.title}</h5>
-                <p class="categoria-producto">${producto.category}</p>
+                <h5 class="titulo-producto">${escaparHTML(producto.title)}</h5>
+                <p class="categoria-producto">${escaparHTML(producto.category)}</p>
                 <p class="precio-producto">$${producto.price}</p>
                 <button class="boton-carrito-agregar" onclick="agregarAlCarrito(${producto.id})">Agregar al carrito</button>
             </div>
@@ -97,7 +103,7 @@ function renderCarrito() {
     listaCarrito.innerHTML = carrito.map(item => `
         <div class="item-carrito mb-4">
             <div class="info-producto">
-                <strong>${item.title}</strong><br>
+                <strong>${escaparHTML(item.title)}</strong><br>
                 <small class="precio-unitario">$${item.price}</small>
             </div>
             <div class="controles-cantidad">
@@ -155,40 +161,87 @@ function quitarDelCarrito(id) {
     renderCarrito();
 }
 
-function inicializarFormularioContacto() {
-    const formulario = document.getElementById('formulario-contacto');
-    const mensajeExito = document.querySelector('[data-fs-success]');
-    
-    if (!formulario) return;
+function mostrarToast(tipo, mensaje) {
+    const toast = document.getElementById('toast-notificacion');
+    const toastMensaje = document.getElementById('toast-mensaje');
+    const toastIcono = document.getElementById('toast-icono');
+    if (!toast) return;
 
-    const observer = new MutationObserver(() => {
-        if (mensajeExito && mensajeExito.style.display !== 'none') {
-            mensajeExito.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            setTimeout(() => {
-                mensajeExito.style.display = 'none';
-            }, 6000);
-        }
-    });
+    // Limpiar estado anterior
+    clearTimeout(toast._ocultarTimer);
+    toast.classList.remove('visible', 'ocultando', 'toast-exito', 'toast-error');
 
-    if (mensajeExito) {
-        observer.observe(mensajeExito, {
-            attributes: true,
-            attributeFilter: ['style']
-        });
-    }
+    // Forzar reflow para reiniciar animaciones
+    void toast.offsetWidth;
+
+    toastIcono.textContent = tipo === 'exito' ? '✅' : '❌';
+    toastMensaje.textContent = mensaje;
+    toast.classList.add('visible', tipo === 'exito' ? 'toast-exito' : 'toast-error');
+
+    toast._ocultarTimer = setTimeout(() => {
+        toast.classList.add('ocultando');
+        setTimeout(() => {
+            toast.classList.remove('visible', 'ocultando', 'toast-exito', 'toast-error');
+        }, 400);
+    }, 5000);
 }
 
-async function init() {
-    await cargarProductos();
-    renderCarrito();
-    inicializarFormularioContacto();
+function inicializarFormularioContacto() {
+    const formulario = document.getElementById('formulario-contacto');
+    if (!formulario) return;
+
+    formulario.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const boton = formulario.querySelector('[data-fs-submit-btn]');
+        const textoOriginal = boton ? boton.textContent : null;
+
+        // Estado de carga
+        if (boton) {
+            boton.disabled = true;
+            boton.classList.add('cargando');
+            boton.textContent = 'Enviando...';
+        }
+
+        try {
+            const datos = new FormData(formulario);
+            const respuesta = await fetch('https://formspree.io/f/xvzjydkj', {
+                method: 'POST',
+                body: datos,
+                headers: { Accept: 'application/json' }
+            });
+
+            if (respuesta.ok) {
+                mostrarToast('exito', '¡Mensaje enviado! Nos pondremos en contacto pronto.');
+                formulario.reset();
+            } else {
+                const cuerpo = await respuesta.json().catch(() => ({}));
+                const errorMsg = cuerpo?.errors?.map(err => err.message).join(', ')
+                    || 'Hubo un problema al enviar. Intentá de nuevo.';
+                mostrarToast('error', errorMsg);
+            }
+        } catch {
+            mostrarToast('error', 'Sin conexión. Revisá tu internet e intentá de nuevo.');
+        } finally {
+            if (boton) {
+                boton.disabled = false;
+                boton.classList.remove('cargando');
+                boton.textContent = textoOriginal;
+            }
+        }
+    });
 }
 
 window.agregarAlCarrito = agregarAlCarrito;
 window.quitarDelCarrito = quitarDelCarrito;
 window.cambiarCantidad = cambiarCantidad;
 window.cambiarCantidadDirecta = cambiarCantidadDirecta;
+
+async function init() {
+    await cargarProductos();
+    renderCarrito();
+    inicializarFormularioContacto();
+}
 
 if (document.readyState === 'loading') {
     window.addEventListener('DOMContentLoaded', init);
