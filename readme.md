@@ -42,7 +42,7 @@ Plataforma de e-commerce ficticia moderna y accesible, construida con HTML, CSS 
 finalproyect/
 ├── index.html       # Estructura principal de la página
 ├── style.css        # Estilos y animaciones
-├── scrips.js        # Lógica de la aplicación (API, carrito, formulario, toast)
+├── scripts.js        # Lógica de la aplicación (API, carrito, formulario, toast)
 └── README.md        # Documentación del proyecto
 ```
 
